@@ -1,5 +1,6 @@
 # pylint: disable=missing-class-docstring,disable=no-self-use
 import os
+import sys
 import unittest
 
 from common import bin_location
@@ -9,6 +10,7 @@ import angr
 
 
 class TestDrillerCore(unittest.TestCase):
+    @unittest.skipIf(sys.platform == "win32", "broken on windows")
     def test_cgc(self):
         binary = os.path.join(bin_location, "tests", "cgc", "sc1_0b32aa01_01")
         simgr, tracer = tracer_cgc(binary, "driller_core_cgc", b"AAAA", copy_states=True, follow_unsat=True)

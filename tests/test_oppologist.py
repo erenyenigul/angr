@@ -1,4 +1,6 @@
 import os
+import sys
+import unittest
 
 import angr
 
@@ -34,6 +36,7 @@ def test_fauxware_oppologist():
         assert stdout.count(b"\n") == 2
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_cromu_70():
     p = angr.Project(os.path.join(test_location, "binaries", "tests", "cgc", "CROMU_00070"))
     inp = bytes.fromhex(

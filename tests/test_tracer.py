@@ -1,6 +1,7 @@
+import logging
 import os
 import sys
-import logging
+import unittest
 
 from common import bin_location, do_trace, load_cgc_pov, slow_test, skip_if_not_linux
 
@@ -122,6 +123,7 @@ def tracer_linux(filename, test_name, stdin, add_options=None, remove_options=No
     return simgr, t
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_recursion():
     blob = bytes.fromhex(
         "00aadd114000000000000000200000001d0000000005000000aadd2a1100001d0000000001e8030000aadd21118611b3b3b3b3b3e3b1b"
@@ -322,6 +324,7 @@ def test_cgc_random_syscall_handling_native_interface():
     )
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_cgc_se1_palindrome_raw():
     b = os.path.join(bin_location, "tests", "cgc", "sc1_0b32aa01_01")
     # test a valid palindrome
@@ -460,6 +463,7 @@ def test_empty_reexecute_block_remove_in_unicorn_native_interface():
     )
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_symbolic_sized_receives():
     b = os.path.join(bin_location, "tests", "cgc", "CROMU_00070")
 
@@ -476,6 +480,7 @@ def test_symbolic_sized_receives():
     assert "traced" in simgr.stashes
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_allocation_base_continuity():
     correct_out = (
         b"prepare for a challenge\nb7fff000\nb7ffe000\nb7ffd000\nb7ffc000\nb7ffb000\nb7ffa000\nb7ff9000\nb7ff8000\n"

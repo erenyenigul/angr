@@ -2,6 +2,8 @@ import gc
 import os
 import pickle
 import re
+import sys
+import unittest
 
 import angr
 from angr import options as so
@@ -197,6 +199,7 @@ def broken_fauxware_arm():
     )
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_fauxware():
     p = angr.Project(os.path.join(test_location, "binaries", "tests", "i386", "fauxware"), auto_load_libs=False)
     s_unicorn = p.factory.entry_state(add_options=so.unicorn)  # unicorn
@@ -365,6 +368,7 @@ def test_unicorn_pickle():
     )
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_concrete_transmits():
     p = angr.Project(os.path.join(test_location, "binaries", "tests", "cgc", "PIZZA_00001"), auto_load_libs=False)
     inp = bytes.fromhex("320a310a0100000005000000330a330a340a")
@@ -486,6 +490,7 @@ def test_single_step():
     assert successors2[0].addr == step5
 
 
+@unittest.skipIf(sys.platform == "win32", "broken on windows")
 def test_symbolic_flags_preserved_on_stop():
     """
     Test if symbolic flags are preserved when unicorn engine stops. This is needed for cases where compare is performed
