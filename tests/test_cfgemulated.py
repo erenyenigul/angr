@@ -543,6 +543,25 @@ class TestCfgemulate(unittest.TestCase):
                     dst_node,
                 )
 
+    def test_uniform_edges(self):
+        binary_path = os.path.join(test_location, "armhf", "test_arrays")
+        
+        p = angr.Project(binary_path, auto_load_libs=False)
+        cfg = p.analyses.CFGEmulated()
+
+        G = cfg.graph
+        edges = G.edges(data=True)
+
+        if len(edges) == 0: return
+
+        first_keys = set(edges[0][2].keys())
+
+        for _, _, feat_dict in edges[1:]:
+            curr_keys = set(feat_dict.keys())
+            assert curr_keys == first_keys               
+
+
+
     class CFGEmulatedAborted(angr.analyses.cfg.cfg_emulated.CFGEmulated):  # pylint:disable=abstract-method
         """
         Only used in the test_abort_and_resume test case.

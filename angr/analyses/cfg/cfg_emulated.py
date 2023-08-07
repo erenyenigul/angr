@@ -1474,7 +1474,7 @@ class CFGEmulated(ForwardAnalysis, CFGBase):  # pylint: disable=abstract-method
                                 return_target_key,
                                 {
                                     "jumpkind": "Ijk_Ret",
-                                    "stmt_id": DEFAULT_STATEMENT,
+                                    "stmt_idx": DEFAULT_STATEMENT,
                                     "ins_addr": ret_ins_addr,
                                 },
                             )
